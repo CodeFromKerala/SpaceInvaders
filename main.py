@@ -29,4 +29,4 @@ def main():
         pygame.display.update()
 
 if __name__ == "__name__":
-    quit()
+    main()
