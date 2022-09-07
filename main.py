@@ -57,3 +57,6 @@ def main():
 # check if the file is not executed by import
 if __name__ == "__main__":
     main()
+
+quit()
+# END OF PROGRAM
