@@ -17,9 +17,9 @@ class Player(pygame.Rect):
         self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load("./player.png"), (50, 50)), 180)
     def update(self):
         if self.move_left == True:
-            self.centerx -= 10
+            self.centerx -= 5
         if self.move_right == True:
-            self.centerx += 10
+            self.centerx += 5
         display.blit(self.image, self)
 
 # Enemy Class
@@ -29,12 +29,18 @@ class Enemy(pygame.Rect):
         self.centery = y
         self.image = pygame.transform.scale(pygame.image.load("./enemy.png"), (50, 50))
     def update(self):
+        if self.x > 0:
+            self.x -= 3
+        else:
+            self.x = 750
+            self.y += 10
         display.blit(self.image, self)
 
 # Main game loop
 def main():
     run = True
     player = Player(50, 550)
+    enemy = Enemy(50, 50)
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -52,6 +58,7 @@ def main():
                     player.move_right = False
         display.fill((0, 0, 255))
         player.update()
+        enemy.update()
         pygame.display.update()
 
 # check if the file is not executed by import
