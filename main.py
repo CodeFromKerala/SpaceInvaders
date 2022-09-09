@@ -14,6 +14,7 @@ class Player(pygame.Rect):
         self.centery = y
         self.move_left = False
         self.move_right = False
+        self.shoot = False
         self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load("./player.png"), (50, 50)), 180)
     def update(self):
         if self.move_left == True:
@@ -36,6 +37,17 @@ class Enemy(pygame.Rect):
             self.y += 10
         display.blit(self.image, self)
 
+# Bullet Class
+class Bullet(pygame.Rect):
+    def __init__(self, player):
+        self.centerx = player.centerx
+        self.centery = player.centery
+        self.image = pygame.image.load("./bullet.png")
+    def update(self, player):
+        if self.y > -20:
+            self.y -= 10
+        display.blit(self.image, self)
+
 # Main game loop
 def main():
     run = True
@@ -51,6 +63,9 @@ def main():
                     player.move_left = True
                 if event.key == pygame.K_RIGHT:
                     player.move_right = True
+                if event.key == pygame.K_SPACE:
+                    bullet = Bullet(player)
+                    player.shoot = True
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     player.move_left = False
@@ -58,6 +73,8 @@ def main():
                     player.move_right = False
         display.fill((0, 0, 255))
         player.update()
+        if player.shoot == True:
+            bullet.update(player)
         enemy.update()
         pygame.display.update()
 
