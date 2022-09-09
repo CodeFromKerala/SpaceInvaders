@@ -28,14 +28,16 @@ class Enemy(pygame.Rect):
     def __init__(self, x, y):
         self.centerx = x
         self.centery = y
+        self.death = False
         self.image = pygame.transform.scale(pygame.image.load("./enemy.png"), (50, 50))
     def update(self):
-        if self.x > 0:
-            self.x -= 3
-        else:
-            self.x = 750
-            self.y += 10
-        display.blit(self.image, self)
+        if self.death == False:
+            if self.x > 0:
+                self.x -= 3
+            else:
+                self.x = 750
+                self.y += 10
+            display.blit(self.image, self)
 
 # Bullet Class
 class Bullet(pygame.Rect):
@@ -43,10 +45,13 @@ class Bullet(pygame.Rect):
         self.centerx = player.centerx
         self.centery = player.centery
         self.image = pygame.image.load("./bullet.png")
-    def update(self, player):
+    def update(self):
         if self.y > -20:
             self.y -= 10
         display.blit(self.image, self)
+    def check_collision(self, enemy):
+        if (self.x >= enemy.x and self.y >= enemy.y) and (self.x <= enemy.x + 50 and self.y <= enemy.y + 50):
+            enemy.death = True
 
 # Main game loop
 def main():
@@ -74,7 +79,8 @@ def main():
         display.fill((0, 0, 255))
         player.update()
         if player.shoot == True:
-            bullet.update(player)
+            bullet.update()
+            bullet.check_collision(enemy)
         enemy.update()
         pygame.display.update()
 
