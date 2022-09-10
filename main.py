@@ -1,4 +1,13 @@
 # importing pygame
+
+'''
+
+Space Invaders In Python
+
+By CodeFromKerala
+
+'''
+
 import pygame
 
 # screen loading and fps
