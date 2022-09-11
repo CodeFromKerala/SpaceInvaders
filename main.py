@@ -15,6 +15,8 @@ display = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("Space Ship Game")
 clock = pygame.time.Clock()
 FPS = 60
+ENEMY = []
+LVL = 1
 
 # Player Class
 class Player(pygame.Rect):
@@ -59,14 +61,24 @@ class Bullet(pygame.Rect):
             self.y -= 10
         display.blit(self.image, self)
     def check_collision(self, enemy):
+        global LVL
         if (self.x >= enemy.x and self.y >= enemy.y) and (self.x <= enemy.x + 50 and self.y <= enemy.y + 50):
             enemy.death = True
+            LVL += 1
+
+# spawn enemy function
+
+def spawn_enemy(x, y):
+    global ENEMY
+    enemy = Enemy(x, y)
+    ENEMY.append(enemy)
+
 
 # Main game loop
 def main():
     run = True
     player = Player(50, 550)
-    enemy = Enemy(50, 50)
+    spawn_enemy()
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -90,7 +102,8 @@ def main():
         if player.shoot == True:
             bullet.update()
             bullet.check_collision(enemy)
-        enemy.update()
+        for enemy in ENEMY:
+            enemy.update()
         pygame.display.update()
 
 # check if the file is not executed by import
