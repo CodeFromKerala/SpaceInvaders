@@ -68,17 +68,19 @@ class Bullet(pygame.Rect):
 
 # spawn enemy function
 
-def spawn_enemy(x, y):
-    global ENEMY
-    enemy = Enemy(x, y)
-    ENEMY.append(enemy)
+class EnemyController:
+    def spawn_enemy(x, y):
+        global ENEMY
+        enemy = Enemy(x, y)
+        ENEMY.append(enemy)
+    
 
 
 # Main game loop
 def main():
     run = True
     player = Player(50, 550)
-    spawn_enemy()
+    spawn_enemy(50, 50)
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
