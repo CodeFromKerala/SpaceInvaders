@@ -68,11 +68,11 @@ class Bullet(pygame.Rect):
 
 # spawn enemy function
 
-class EnemyController:
-    def spawn_enemy(x, y):
-        global ENEMY
-        enemy = Enemy(x, y)
-        ENEMY.append(enemy)
+
+def spawn_enemy(x, y):
+    global ENEMY
+    enemy = Enemy(x, y)
+    ENEMY.append(enemy)
     
 
 
